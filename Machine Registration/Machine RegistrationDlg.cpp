@@ -7,6 +7,7 @@
 #include "Machine Registration.h"
 #include "Machine RegistrationDlg.h"
 #include "afxdialogex.h"
+#define MACHINE_REG_ADMINISTRATORS_CALL
 #include "../MachineRegistration/MachineRegistration.h"
 #include "CpuInfo.h"
 
@@ -27,7 +28,7 @@ CMachineRegistrationDlg::CMachineRegistrationDlg(CWnd* pParent /*=nullptr*/)
 
 void CMachineRegistrationDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	thatboy::mfc::CDragDialog::DoDataExchange(pDX);
 }
 
 BEGIN_MESSAGE_MAP(CMachineRegistrationDlg, thatboy::mfc::CDragDialog)
@@ -35,6 +36,7 @@ BEGIN_MESSAGE_MAP(CMachineRegistrationDlg, thatboy::mfc::CDragDialog)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_GENERATE, &CMachineRegistrationDlg::OnBnClickedGenerateRegCode)
 	ON_BN_CLICKED(IDC_FILLCODE, &CMachineRegistrationDlg::OnBnClickedFillcode)
+	ON_BN_CLICKED(IDC_FILLMACHINID, &CMachineRegistrationDlg::OnBnClickedFillmachinid)
 END_MESSAGE_MAP()
 
 
@@ -94,13 +96,15 @@ HCURSOR CMachineRegistrationDlg::OnQueryDragIcon()
 
 void CMachineRegistrationDlg::OnBnClickedGenerateRegCode()
 {
-	char machineCode[MAX_PATH];
+	char machineId[MAX_PATH];
+	char envirment[MAX_PATH];
 	char registrationCode[MAX_PATH];
 	int key;
 
-	GetDlgItemText(IDC_MACHINECODE, machineCode, MAX_PATH);
+	GetDlgItemText(IDC_MACHINECODE, machineId, MAX_PATH);
+	GetDlgItemText(IDC_MACHINEARGV, envirment, MAX_PATH);
 	
-	key = RegisterMachine(machineCode, registrationCode);
+	key = RegisterClient(machineId, envirment, registrationCode);
 
 	SetDlgItemText(IDC_REGISTRATIONCODE, registrationCode);
 	SetDlgItemInt(IDC_KEYVALUE, key);
@@ -109,6 +113,13 @@ void CMachineRegistrationDlg::OnBnClickedGenerateRegCode()
 
 void CMachineRegistrationDlg::OnBnClickedFillcode()
 {
+	SetDlgItemText(IDC_MACHINEARGV, thatboy::getCpuVendor().c_str());
+}
 
-	SetDlgItemText(IDC_MACHINECODE, getCpuSerialId().c_str());
+
+void CMachineRegistrationDlg::OnBnClickedFillmachinid()
+{
+	char machineId[MAX_PATH]{ NULL };
+	QueryMachineId(machineId);
+	SetDlgItemText(IDC_MACHINECODE, machineId);
 }

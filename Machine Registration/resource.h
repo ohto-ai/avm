@@ -9,8 +9,10 @@
 #define IDC_REGISTRATIONCODE            1001
 #define IDC_GENERATE                    1002
 #define IDC_KEYVALUE                    1003
-#define IDC_GENERATE2                   1004
 #define IDC_FILLCODE                    1004
+#define IDC_MACHINEARGV                 1005
+#define IDC_FILLCODE2                   1006
+#define IDC_FILLMACHINID                1006
 
 // Next default values for new objects
 // 

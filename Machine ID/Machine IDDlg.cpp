@@ -1,11 +1,11 @@
 ﻿
-// Machine RegCheckDlg.cpp: 实现文件
+// Machine IDDlg.cpp: 实现文件
 //
 
 #include "pch.h"
 #include "framework.h"
-#include "Machine RegCheck.h"
-#include "Machine RegCheckDlg.h"
+#include "Machine ID.h"
+#include "Machine IDDlg.h"
 #include "afxdialogex.h"
 #include "../MachineRegistrationClient/MachineRegistrationClient.h"
 
@@ -14,33 +14,32 @@
 #endif
 
 
-// CMachineRegCheckDlg 对话框
+// CMachineIDDlg 对话框
 
 
 
-CMachineRegCheckDlg::CMachineRegCheckDlg(CWnd* pParent /*=nullptr*/)
-	: thatboy::mfc::CDragDialog(IDD_MACHINEREGCHECK_DIALOG, pParent)
+CMachineIDDlg::CMachineIDDlg(CWnd* pParent /*=nullptr*/)
+	: thatboy::mfc::CDragDialog(IDD_MACHINEID_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CMachineRegCheckDlg::DoDataExchange(CDataExchange* pDX)
+void CMachineIDDlg::DoDataExchange(CDataExchange* pDX)
 {
 	thatboy::mfc::CDragDialog::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(CMachineRegCheckDlg, thatboy::mfc::CDragDialog)
+BEGIN_MESSAGE_MAP(CMachineIDDlg, thatboy::mfc::CDragDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_VERIFY, &CMachineRegCheckDlg::OnBnClickedVerify)
 END_MESSAGE_MAP()
 
 
-// CMachineRegCheckDlg 消息处理程序
+// CMachineIDDlg 消息处理程序
 
-BOOL CMachineRegCheckDlg::OnInitDialog()
+BOOL CMachineIDDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CDragDialog::OnInitDialog();
 
 	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
 	//  执行此操作
@@ -48,7 +47,11 @@ BOOL CMachineRegCheckDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	CDragDialog::ModifyDragStyle(DS_TOOLBAR | DS_ENTERCTRL);
-	CDragDialog::SetWindowText(TEXT("注册码验证（注册机器验证）"));
+	CDragDialog::SetWindowText(TEXT("序列号查询"));
+
+	char machineId[MAX_PATH] = { NULL };
+	QueryMachineId(machineId);
+	SetDlgItemText(IDC_MACHINEID, machineId);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -57,7 +60,7 @@ BOOL CMachineRegCheckDlg::OnInitDialog()
 //  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
 //  这将由框架自动完成。
 
-void CMachineRegCheckDlg::OnPaint()
+void CMachineIDDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -78,28 +81,14 @@ void CMachineRegCheckDlg::OnPaint()
 	}
 	else
 	{
-		CDialogEx::OnPaint();
+		CDragDialog::OnPaint();
 	}
 }
 
 //当用户拖动最小化窗口时系统调用此函数取得光标
 //显示。
-HCURSOR CMachineRegCheckDlg::OnQueryDragIcon()
+HCURSOR CMachineIDDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-
-
-void CMachineRegCheckDlg::OnBnClickedVerify()
-{
-	char envirment[MAX_PATH];
-	char registrationCode[MAX_PATH];
-	int key;
-
-	GetDlgItemText(IDC_MACHINECODE, envirment, MAX_PATH);
-	GetDlgItemText(IDC_REGISTRATIONCODE, registrationCode, MAX_PATH);
-
-	key = VerifyMachine(envirment, registrationCode);
-	SetDlgItemInt(IDC_KEYVALUE, key);
-}

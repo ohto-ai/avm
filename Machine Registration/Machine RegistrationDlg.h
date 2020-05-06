@@ -33,4 +33,5 @@ protected:
 public:
 	afx_msg void OnBnClickedGenerateRegCode();
 	afx_msg void OnBnClickedFillcode();
+	afx_msg void OnBnClickedFillmachinid();
 };

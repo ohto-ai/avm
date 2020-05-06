@@ -1,5 +1,8 @@
-#include "pch.h"
-#include "MachineRegistrationClient.h"
+#pragma once
+#ifndef _MACHINEREGISTRATION_H_
+#define _MACHINEREGISTRATION_H_
+
+#include "MachineRegistrationForLinux.h"
 #include "MD5.h"
 #include "CpuInfo.h"
 
@@ -40,7 +43,7 @@ int generateFinalRegisterCode(int xorValue, std::string& registerCode)
 }
 
 
-int _stdcall RegisterClient(const char* machineId, const char* envirment, char* clientCode)
+int RegisterClient(const char* machineId, const char* envirment, char* clientCode)
 {
 	std::string registerCode;
 	int key = generateFinalRegisterCode(generateOriginalRegisterCode(machineId, envirment, registerCode), registerCode);
@@ -48,7 +51,7 @@ int _stdcall RegisterClient(const char* machineId, const char* envirment, char* 
 	return key;
 }
 
-int _stdcall VerifyClient(const char* machineId, const char* envirment, const char* registerCode)
+int VerifyClient(const char* machineId, const char* envirment, const char* registerCode)
 {
 	int key, xorCode;
 	if (strlen(registerCode) < 23)
@@ -60,15 +63,7 @@ int _stdcall VerifyClient(const char* machineId, const char* envirment, const ch
 		key = 0;
 	return key;
 }
-
-int _stdcall VerifyMachine(const char* envirment, const char* registerCode)
-{
-	char machineId[MAX_PATH]{ NULL };
-	QueryMachineId(machineId);
-	return VerifyClient(machineId, envirment, registerCode);
-}
-
-void _stdcall QueryMachineId(char* machineId)
+void QueryMachineId(char* machineId)
 {
 	std::string serialId = thatboy::getCpuSerialId();
 	serialId += thatboy::getCpuBrand();
@@ -79,3 +74,13 @@ void _stdcall QueryMachineId(char* machineId)
 	serialId.insert(4, 1, '-');
 	serialId.copy(machineId, serialId.size() + 1);
 }
+
+int VerifyMachine(const char* envirment, const char* registerCode)
+{
+	char machineId[260]{ NULL };
+	QueryMachineId(machineId);
+	return VerifyClient(machineId, envirment, registerCode);
+}
+
+
+#endif // !_REGISTRATION_CODE_H_
