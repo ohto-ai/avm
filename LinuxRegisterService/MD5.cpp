@@ -1,6 +1,7 @@
 // MD5.cpp
 #include "MD5.h"
 #include <iostream>
+#include <cstring>
 //
 constexpr int S11 = 7;
 constexpr int S12 = 12;
@@ -288,7 +289,7 @@ std::string MD5::hexdigest() const
 		return "";
 
 	char buf[33];
-	sprintf_s(buf, 33, "%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+	sprintf(buf, "%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
 		digest[0], digest[1], digest[2], digest[3], digest[4], digest[5], digest[6], digest[7],
 		digest[8], digest[9], digest[10], digest[11], digest[12], digest[13], digest[14], digest[15]);
 	buf[32] = 0;

@@ -9,7 +9,7 @@
 #include "afxdialogex.h"
 #define MACHINE_REG_ADMINISTRATORS_CALL
 #include "../MachineRegistration/MachineRegistration.h"
-#include "CpuInfo.h"
+#include "../TBCpuInfo.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

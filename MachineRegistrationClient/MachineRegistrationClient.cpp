@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "MachineRegistrationClient.h"
 #include "MD5.h"
-#include "CpuInfo.h"
+#include "../TBCpuInfo.h"
 
 constexpr char Salt[] = R"THIS-IS-SALT(SMARTION-XN1eO233,gCGtFc^z/0FkjYi9jzY)'E2K@:]'q3$]5&{dK!s2p$Wf14j/oIKKABR9?!R1yJW}{U;3DM/i9Z&L3|N3%N{M#Ml6~)4enw,*;.yD];vUBh8;D;)THIS-IS-SALT";
 constexpr char SaltX[] = R"THIS-IS-SALT-X(W"4\)UJl)B$oDZF}?G6#b5Hb'h$LaX!M)THIS-IS-SALT-X";
+
 
 int generateOriginalRegisterCode(const char* machineId, const char* envirment, std::string& registerCode)
 {
@@ -39,8 +40,7 @@ int generateFinalRegisterCode(int xorValue, std::string& registerCode)
 	return keyValue;
 }
 
-
-int _stdcall RegisterClient(const char* machineId, const char* envirment, char* clientCode)
+int _STDCALL RegisterClient(const char* machineId, const char* envirment, char* clientCode)
 {
 	std::string registerCode;
 	int key = generateFinalRegisterCode(generateOriginalRegisterCode(machineId, envirment, registerCode), registerCode);
@@ -48,7 +48,7 @@ int _stdcall RegisterClient(const char* machineId, const char* envirment, char* 
 	return key;
 }
 
-int _stdcall VerifyClient(const char* machineId, const char* envirment, const char* registerCode)
+int _STDCALL VerifyClient(const char* machineId, const char* envirment, const char* registerCode)
 {
 	int key, xorCode;
 	if (strlen(registerCode) < 23)
@@ -61,14 +61,17 @@ int _stdcall VerifyClient(const char* machineId, const char* envirment, const ch
 	return key;
 }
 
-int _stdcall VerifyMachine(const char* envirment, const char* registerCode)
+int _STDCALL VerifyMachine(const char* envirment, const char* registerCode)
 {
 	char machineId[MAX_PATH]{ NULL };
 	QueryMachineId(machineId);
-	return VerifyClient(machineId, envirment, registerCode);
+	if (thatboy::isInsideVirtualMachine())
+		return 0;
+	else
+		return VerifyClient(machineId, envirment, registerCode);
 }
 
-void _stdcall QueryMachineId(char* machineId)
+void _STDCALL QueryMachineId(char* machineId)
 {
 	std::string serialId = thatboy::getCpuSerialId();
 	serialId += thatboy::getCpuBrand();

@@ -24,6 +24,9 @@
     <ClInclude Include="MachineRegistrationClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CpuInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
