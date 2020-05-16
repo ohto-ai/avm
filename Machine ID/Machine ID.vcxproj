@@ -182,6 +182,7 @@
     <ClInclude Include="..\Machine Registration\CDragDialog.h" />
     <ClInclude Include="..\Machine Registration\CImageButton.h" />
     <ClInclude Include="..\Machine Registration\CPng.hpp" />
+    <ClInclude Include="..\TBCpuInfo.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Machine ID.h" />
     <ClInclude Include="Machine IDDlg.h" />

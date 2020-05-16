@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CpuInfo.h" />
+    <ClInclude Include="..\TBCpuInfo.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MachineRegistrationClient.h" />
     <ClInclude Include="pch.h" />

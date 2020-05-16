@@ -4,6 +4,7 @@
 #define _CPU_INFO_H_
 
 
+#include <iostream>
 #include <string>
 #include <sstream>
 
@@ -13,7 +14,7 @@
 #include <cstring>
 #elif defined(_MSC_VER)    // MSVC
 #if _MSC_VER >=1400    // VC2005
-#include <Windows.h>
+#include <windows.h>
 #include <intrin.h>
 #include <tlhelp32.h>
 #endif    // #if _MSC_VER >=1400
@@ -80,9 +81,9 @@ namespace thatboy
 	{
 		std::string vendor(49, '\0');
 		unsigned int dwBuf[4];
-		// Function 0x80000000: Largest Extended Function Number
+		// Function 0x80000000: Largest Extended Function Numbers
 		getCpuId(dwBuf, 0x80000000U);
-		if (dwBuf[0] < 0x80000004U)    return 0;
+		if (dwBuf[0] < 0x80000004U)    return "";
 		// Function 80000002h,80000003h,80000004h: Processor Brand String
 		getCpuId(reinterpret_cast<unsigned int*>(&vendor[0]), 0x80000002U);    // 前16个字符.
 		getCpuId(reinterpret_cast<unsigned int*>(&vendor[16]), 0x80000003U);    // 中间16个字符.
@@ -93,12 +94,11 @@ namespace thatboy
 
 	std::string getCpuSerialId()
 	{
-		char serialId[33];
+		char serialId[17];
 		unsigned int dwBuf[4];
 		getCpuId(dwBuf, 1);
-		dwBuf[1] &= 0X00FFFFFF;
-		sprintf(serialId, "%08X%08X%08X%08X", dwBuf[0], dwBuf[1], dwBuf[2], dwBuf[3]);
-		serialId[32] = '\0';
+		sprintf(serialId, "%08X%08X", dwBuf[3], dwBuf[0]);
+		serialId[16] = '\0';
 		return serialId;
 	}
 

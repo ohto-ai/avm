@@ -24,7 +24,7 @@
     <ClInclude Include="MachineRegistration.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CpuInfo.h">
+    <ClInclude Include="..\TBCpuInfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
