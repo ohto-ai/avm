@@ -3,11 +3,12 @@
 #define _MACHINEREGISTRATION_H_
 
 #ifndef REGISTRATION_CODE_API
-
 #ifdef __GNUC__
 #define REGISTRATION_CODE_API extern "C"
+#define _STDCALL
 #else
 #ifdef _MSC_VER
+#define _STDCALL _stdcall
 #if defined MACHINEREGISTRATION_EXPORTS || defined MACHINEREGISTRATIONCLIENT_EXPORTS
 #define REGISTRATION_CODE_API extern "C" __declspec(dllexport)
 #else
@@ -26,7 +27,7 @@
 	param registerCode, 存储注册码
 	return keyValue, 用于宿主程序的密钥【重要】
 */
-REGISTRATION_CODE_API int _stdcall RegisterClient(const char* machineId, const char* envirment, char* registerCode);
+REGISTRATION_CODE_API int _STDCALL RegisterClient(const char* machineId, const char* envirment, char* registerCode);
 /**
 	验证
 	注册
@@ -35,7 +36,7 @@ REGISTRATION_CODE_API int _stdcall RegisterClient(const char* machineId, const c
 	param registerCode, 客户提供的注册码
 	return keyValue, 用于宿主程序的密钥【重要】
 */
-REGISTRATION_CODE_API int _stdcall VerifyClient(const char* machineId, const char* envirment, const char* registerCode);
+REGISTRATION_CODE_API int _STDCALL VerifyClient(const char* machineId, const char* envirment, const char* registerCode);
 #endif // MACHINEREGISTRATION_EXPORTS
 
 /**
@@ -44,14 +45,14 @@ REGISTRATION_CODE_API int _stdcall VerifyClient(const char* machineId, const cha
 	param registerCode, 客户提供的注册码
 	return keyValue, 用于宿主程序的密钥【重要】，校验失败返回0
 */
-REGISTRATION_CODE_API int _stdcall VerifyMachine(const char* envirment, const char* registerCode);
+REGISTRATION_CODE_API int _STDCALL VerifyMachine(const char* envirment, const char* registerCode);
 
 /**
 	序列号
 	param machineId, 存储机器序列号 XXXX-XXXX-XXXX-XXXX-XXXX
 	return keyValue, 用于宿主程序的密钥【重要】，校验失败返回0
 */
-REGISTRATION_CODE_API void _stdcall QueryMachineId(char* machineId);
+REGISTRATION_CODE_API const char* _STDCALL QueryMachineId();
 
 
 

@@ -63,16 +63,15 @@ int _STDCALL VerifyClient(const char* machineId, const char* envirment, const ch
 
 int _STDCALL VerifyMachine(const char* envirment, const char* registerCode)
 {
-	char machineId[MAX_PATH]{ NULL };
-	QueryMachineId(machineId);
 	if (thatboy::isInsideVirtualMachine())
 		return 0;
 	else
-		return VerifyClient(machineId, envirment, registerCode);
+		return VerifyClient(QueryMachineId(), envirment, registerCode);
 }
 
-void _STDCALL QueryMachineId(char* machineId)
+const char* _STDCALL QueryMachineId()
 {
+	static char machineId[MAX_PATH]{ NULL };
 	std::string serialId = thatboy::getCpuSerialId();
 	serialId += thatboy::getCpuBrand();
 	serialId = md5(serialId).substr(4, 20);
@@ -81,4 +80,22 @@ void _STDCALL QueryMachineId(char* machineId)
 	serialId.insert(8, 1, '-');
 	serialId.insert(4, 1, '-');
 	serialId.copy(machineId, serialId.size() + 1);
+	return machineId;
 }
+
+JNIEXPORT jint JNICALL Java_RegistrationClient_MachineRegistrationClient_VerifyMachine(JNIEnv* jniEnv, jclass, jstring env, jstring regcode)
+{
+	auto nativeEnv = jniEnv->GetStringUTFChars(env, nullptr);
+	auto nativeRegCode = jniEnv->GetStringUTFChars(regcode, nullptr);
+	jint ret = VerifyMachine(nativeEnv, nativeRegCode);
+	jniEnv->ReleaseStringUTFChars(env, nativeEnv);
+	jniEnv->ReleaseStringUTFChars(regcode, nativeEnv);
+	return ret;
+}
+
+
+JNIEXPORT jstring JNICALL Java_RegistrationClient_MachineRegistrationClient_QueryMachineId(JNIEnv* jniEnv, jclass)
+{
+	return jniEnv->NewStringUTF(QueryMachineId());
+}
+

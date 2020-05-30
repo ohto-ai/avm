@@ -89,9 +89,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;MACHINEREGISTRATIONCLIENT_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JNI_API;NDEBUG;MACHINEREGISTRATIONCLIENT_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\Program Files\Java\jdk1.8.0_251\include;C:\Program Files\Java\jdk1.8.0_251\include\win32;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,9 +122,10 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;MACHINEREGISTRATIONCLIENT_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JNI_API;_DEBUG;MACHINEREGISTRATIONCLIENT_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\Program Files\Java\jdk1.8.0_251\include;C:\Program Files\Java\jdk1.8.0_251\include\win32;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

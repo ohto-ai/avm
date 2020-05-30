@@ -49,9 +49,7 @@ BOOL CMachineIDDlg::OnInitDialog()
 	CDragDialog::ModifyDragStyle(DS_TOOLBAR | DS_ENTERCTRL);
 	CDragDialog::SetWindowText(TEXT("序列号查询"));
 
-	char machineId[MAX_PATH] = { NULL };
-	QueryMachineId(machineId);
-	SetDlgItemText(IDC_MACHINEID, machineId);
+	SetDlgItemText(IDC_MACHINEID, QueryMachineId());
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

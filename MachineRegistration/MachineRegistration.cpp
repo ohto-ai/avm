@@ -61,18 +61,17 @@ int _stdcall VerifyClient(const char* machineId, const char* envirment, const ch
 	return key;
 }
 
-int _stdcall VerifyMachine(const char* envirment, const char* registerCode)
+int _STDCALL VerifyMachine(const char* envirment, const char* registerCode)
 {
-	char machineId[MAX_PATH]{ NULL };
-	QueryMachineId(machineId);
 	if (thatboy::isInsideVirtualMachine())
 		return 0;
 	else
-		return VerifyClient(machineId, envirment, registerCode);
+		return VerifyClient(QueryMachineId(), envirment, registerCode);
 }
 
-void _stdcall QueryMachineId(char* machineId)
+const char* _STDCALL QueryMachineId()
 {
+	static char machineId[MAX_PATH]{ NULL };
 	std::string serialId = thatboy::getCpuSerialId();
 	serialId += thatboy::getCpuBrand();
 	serialId = md5(serialId).substr(4, 20);
@@ -81,4 +80,5 @@ void _stdcall QueryMachineId(char* machineId)
 	serialId.insert(8, 1, '-');
 	serialId.insert(4, 1, '-');
 	serialId.copy(machineId, serialId.size() + 1);
+	return machineId;
 }

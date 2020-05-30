@@ -119,7 +119,5 @@ void CMachineRegistrationDlg::OnBnClickedFillcode()
 
 void CMachineRegistrationDlg::OnBnClickedFillmachinid()
 {
-	char machineId[MAX_PATH]{ NULL };
-	QueryMachineId(machineId);
-	SetDlgItemText(IDC_MACHINECODE, machineId);
+	SetDlgItemText(IDC_MACHINECODE, QueryMachineId());
 }
