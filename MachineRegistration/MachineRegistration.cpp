@@ -6,6 +6,7 @@
 constexpr char Salt[] = R"THIS-IS-SALT(SMARTION-XN1eO233,gCGtFc^z/0FkjYi9jzY)'E2K@:]'q3$]5&{dK!s2p$Wf14j/oIKKABR9?!R1yJW}{U;3DM/i9Z&L3|N3%N{M#Ml6~)4enw,*;.yD];vUBh8;D;)THIS-IS-SALT";
 constexpr char SaltX[] = R"THIS-IS-SALT-X(W"4\)UJl)B$oDZF}?G6#b5Hb'h$LaX!M)THIS-IS-SALT-X";
 
+
 int generateOriginalRegisterCode(const char* machineId, const char* envirment, std::string& registerCode)
 {
 	int xorValue = 0;
@@ -39,8 +40,7 @@ int generateFinalRegisterCode(int xorValue, std::string& registerCode)
 	return keyValue;
 }
 
-
-int _stdcall RegisterClient(const char* machineId, const char* envirment, char* clientCode)
+int _STDCALL RegisterClient(const char* machineId, const char* envirment, char* clientCode)
 {
 	std::string registerCode;
 	int key = generateFinalRegisterCode(generateOriginalRegisterCode(machineId, envirment, registerCode), registerCode);
@@ -48,7 +48,7 @@ int _stdcall RegisterClient(const char* machineId, const char* envirment, char* 
 	return key;
 }
 
-int _stdcall VerifyClient(const char* machineId, const char* envirment, const char* registerCode)
+int _STDCALL VerifyClient(const char* machineId, const char* envirment, const char* registerCode)
 {
 	int key, xorCode;
 	if (strlen(registerCode) < 23)
@@ -63,9 +63,11 @@ int _stdcall VerifyClient(const char* machineId, const char* envirment, const ch
 
 int _STDCALL VerifyMachine(const char* envirment, const char* registerCode)
 {
+#ifndef VMWARE_NOCHECK
 	if (thatboy::isInsideVirtualMachine())
 		return 0;
 	else
+#endif
 		return VerifyClient(QueryMachineId(), envirment, registerCode);
 }
 
@@ -73,7 +75,7 @@ const char* _STDCALL QueryMachineId()
 {
 	static char machineId[MAX_PATH]{ NULL };
 	std::string serialId = thatboy::getCpuSerialId();
-	serialId += thatboy::getCpuBrand();
+	serialId += thatboy::getCpuBrand();             
 	serialId = md5(serialId).substr(4, 20);
 	serialId.insert(16, 1, '-');
 	serialId.insert(12, 1, '-');
@@ -82,3 +84,20 @@ const char* _STDCALL QueryMachineId()
 	serialId.copy(machineId, serialId.size() + 1);
 	return machineId;
 }
+
+#ifdef JNI_API
+JNIEXPORT jint JNICALL Java_RegistrationClient_MachineRegistrationClient_VerifyMachine(JNIEnv* jniEnv, jclass, jstring env, jstring regcode)
+{
+	auto nativeEnv = jniEnv->GetStringUTFChars(env, nullptr);
+	auto nativeRegCode = jniEnv->GetStringUTFChars(regcode, nullptr);
+	jint ret = VerifyMachine(nativeEnv, nativeRegCode);
+	jniEnv->ReleaseStringUTFChars(env, nativeEnv);
+	jniEnv->ReleaseStringUTFChars(regcode, nativeEnv);
+	return ret;
+}
+
+JNIEXPORT jstring JNICALL Java_RegistrationClient_MachineRegistrationClient_QueryMachineId(JNIEnv* jniEnv, jclass)
+{
+	return jniEnv->NewStringUTF(QueryMachineId());
+}
+#endif

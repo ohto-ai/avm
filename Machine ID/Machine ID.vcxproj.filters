@@ -72,7 +72,7 @@
     <None Include="res\MachineID.rc2">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="..\x64\Release\MachineRegistrationClient.dll">
+    <None Include="..\Release\MachineRegistrationClient.dll">
       <Filter>头文件</Filter>
     </None>
   </ItemGroup>
@@ -85,7 +85,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\x64\Release\MachineRegistrationClient.lib">
+    <Library Include="..\Release\MachineRegistrationClient.lib">
       <Filter>头文件</Filter>
     </Library>
   </ItemGroup>

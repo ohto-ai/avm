@@ -21,38 +21,37 @@
 
 #if defined MACHINEREGISTRATION_EXPORTS || defined MACHINE_REG_ADMINISTRATORS_CALL	// for admin call
 
-/**
-	注册
-	param machineId, 机器序列号
-	param envirment, 用于结合MachineId生成注册码 XXXXX-XXXXX-XXXXX-XXXXX
-	param registerCode, 存储注册码
-	return keyValue, 用于宿主程序的密钥【重要】
-*/
+/// <summary>
+/// 注册客户端
+/// </summary>
+/// <param name="machineId">机器序列号</param>
+/// <param name="envirment">用于结合MachineId生成注册码，以便校对</param>
+/// <param name="registerCode"></param>
+/// <returns>用于宿主程序的密钥【重要】</returns>
 REGISTRATION_CODE_API int _STDCALL RegisterClient(const char* machineId, const char* envirment, char* registerCode);
-/**
-	验证
-	注册
-	param machineId, 机器序列号
-	param envirment, 用于结合MachineId生成注册码 XXXXX-XXXXX-XXXXX-XXXXX
-	param registerCode, 客户提供的注册码
-	return keyValue, 用于宿主程序的密钥【重要】
-*/
+
+/// <summary>
+/// 验证客户端
+/// </summary>
+/// <param name="machineId">机器序列号</param>
+/// <param name="envirment">用于结合MachineId生成注册码，以便校对</param>
+/// <param name="registerCode">客户提供的注册码</param>
+/// <returns>用于宿主程序的密钥【重要】，校验失败返回0，格式错误返回-1</returns>
 REGISTRATION_CODE_API int _STDCALL VerifyClient(const char* machineId, const char* envirment, const char* registerCode);
 #endif // MACHINEREGISTRATION_EXPORTS
 
-/**
-	验证
-	param envirment, 用于结合MachineId生成注册码，以便校对
-	param registerCode, 客户提供的注册码
-	return keyValue, 用于宿主程序的密钥【重要】，校验失败返回0
-*/
+/// <summary>
+/// 验证本机
+/// </summary>
+/// <param name="envirment">用于结合MachineId生成注册码，以便校对</param>
+/// <param name="registerCode">客户提供的注册码</param>
+/// <returns>用于宿主程序的密钥【重要】，校验失败返回0，格式错误返回-1</returns>
 REGISTRATION_CODE_API int _STDCALL VerifyMachine(const char* envirment, const char* registerCode);
 
-/**
-	序列号
-	param machineId, 存储机器序列号 XXXX-XXXX-XXXX-XXXX-XXXX
-	return keyValue, 用于宿主程序的密钥【重要】，校验失败返回0
-*/
+/// <summary>
+/// 查询本机序列号
+/// </summary>
+/// <returns>序列号</returns>
 REGISTRATION_CODE_API const char* _STDCALL QueryMachineId();
 
 #ifdef JNI_API

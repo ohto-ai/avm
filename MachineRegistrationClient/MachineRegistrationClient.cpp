@@ -63,9 +63,11 @@ int _STDCALL VerifyClient(const char* machineId, const char* envirment, const ch
 
 int _STDCALL VerifyMachine(const char* envirment, const char* registerCode)
 {
+#ifndef VMWARE_NOCHECK
 	if (thatboy::isInsideVirtualMachine())
 		return 0;
 	else
+#endif
 		return VerifyClient(QueryMachineId(), envirment, registerCode);
 }
 
@@ -83,6 +85,7 @@ const char* _STDCALL QueryMachineId()
 	return machineId;
 }
 
+#ifdef JNI_API
 JNIEXPORT jint JNICALL Java_RegistrationClient_MachineRegistrationClient_VerifyMachine(JNIEnv* jniEnv, jclass, jstring env, jstring regcode)
 {
 	auto nativeEnv = jniEnv->GetStringUTFChars(env, nullptr);
@@ -99,3 +102,4 @@ JNIEXPORT jstring JNICALL Java_RegistrationClient_MachineRegistrationClient_Quer
 	return jniEnv->NewStringUTF(QueryMachineId());
 }
 
+#endif

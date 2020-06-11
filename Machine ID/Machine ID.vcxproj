@@ -206,7 +206,7 @@
     <ResourceCompile Include="MachineID.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\x64\Release\MachineRegistrationClient.dll" />
+    <None Include="..\Release\MachineRegistrationClient.dll" />
     <None Include="res\MachineID.rc2" />
   </ItemGroup>
   <ItemGroup>
@@ -214,7 +214,7 @@
     <Image Include="res\Machine ID.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\x64\Release\MachineRegistrationClient.lib" />
+    <Library Include="..\Release\MachineRegistrationClient.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
