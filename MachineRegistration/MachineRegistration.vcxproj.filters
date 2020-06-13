@@ -18,13 +18,13 @@
     <ClInclude Include="framework.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="MachineRegistration.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\TBCpuInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,10 +32,13 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="MachineRegistration.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MachineRegistration.cpp">
+    <ClCompile Include="RegistrationCore.hpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

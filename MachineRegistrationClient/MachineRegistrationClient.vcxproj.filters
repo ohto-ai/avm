@@ -21,10 +21,10 @@
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="MachineRegistrationClient.h">
+    <ClInclude Include="..\TBCpuInfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\TBCpuInfo.h">
+    <ClInclude Include="..\MachineRegistration\MachineRegistration.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,7 +35,7 @@
     <ClCompile Include="pch.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MachineRegistrationClient.cpp">
+    <ClCompile Include="..\MachineRegistration\MachineRegistration.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

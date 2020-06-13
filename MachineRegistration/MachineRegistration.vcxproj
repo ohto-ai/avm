@@ -155,6 +155,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="MachineRegistration.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="RegistrationCore.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
