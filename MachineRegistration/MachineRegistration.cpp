@@ -23,7 +23,7 @@ int _STDCALL VerifyClient(const char* machineId, const char* envirment, const ch
 
 int _STDCALL VerifyMachine(const char* envirment, const char* registerCode)
 {
-#ifndef VMWARE_NOCHECK
+#ifndef VMWARE_NOCHECK	// ²»¼ì²éÐéÄâ»ú
 	if (thatboy::isInsideVirtualMachine())
 		return -2;
 	else
